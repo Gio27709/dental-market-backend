@@ -26,7 +26,7 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">
-        Clickea aqui
+        Clickea aqui pero otro texto
       </p>
     </>
   )
