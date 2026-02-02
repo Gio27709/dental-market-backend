@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+const safeLazy = (importFn) => {
+  return lazy(async () => {
+    try {
+      return await importFn();
+    } catch (error) {
+      console.error("Error cargando el módulo, reintentando...", error);
+      window.location.reload();
+      return { default: () => null };
+    }
+  });
+};
+
+const Home = safeLazy(() => import("./pages/Home"));
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      <div className="App">
+        <Suspense
+          fallback={
+            <div className="loading-screen">
+              <p>Is loading...</p>
+            </div>
+          }
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </Suspense>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Clickea aqui solo 1 vez
-      </p>
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;

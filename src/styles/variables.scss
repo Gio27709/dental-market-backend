@@ -1,0 +1,44 @@
+/** Variables de colores pre-definidos (se usan como fallback o para definir variables CSS) */
+$color-bg-dark: #1e1e1e;
+$color-bg-card: #2c2c2c;
+$color-text-light: #ffffff;
+$color-text-medium: #aaaaaa;
+$color-accent-purple: #9c27b0;
+$color-accent-pink: #e91e63;
+$shadow: #0000002d;
+
+/** Paleta de colores por defecto (Modo Claro) usando variables CSS */
+:root {
+  --color-bg-main: #fafafa;
+  --color-bg-card: #ffffff;
+  --color-text-primary: #000000;
+  --color-text-secondary: #2f3333;
+  --color-accent-primary: #e91e63;
+  --color-accent-secondary: #5d9cec;
+  --shadow: #0000002d;
+}
+
+/** Variables SCSS mapeadas a las variables CSS dinámicas */
+$color-bg-dark: var(--color-bg-main);
+$color-bg-card: var(--color-bg-card);
+$color-text-light: var(--color-text-primary);
+$color-text-medium: var(--color-text-secondary);
+$color-accent-purple: var(--color-accent-primary);
+$color-accent-pink: var(--color-accent-secondary);
+$shadow: var(--shadow);
+
+/** Variables de espaciado y padding */
+$spacing-unit: 8px;
+$padding-small: $spacing-unit * 2;
+$padding-medium: $spacing-unit * 3;
+$padding-large: $spacing-unit * 5;
+
+/** Variables para bordes y sombras */
+$border-radius-small: 4px;
+$border-radius-medium: 8px;
+$box-shadow-dark: 4px 4px 12px rgba(0, 0, 0, 0.4);
+
+/** Tamaño fijo del sidebar derecho y color de peligro */
+$right-sidebar-size: 280px;
+$color-danger: #dc3545;
+$success-color: #28a745;

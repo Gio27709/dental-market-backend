@@ -1,0 +1,7 @@
+1.00
+- Feature
+1.- Nombre del proyecto e inicio.
+1.01
+- Feature
+1.- Sass.
+2.- React Router Doom.
