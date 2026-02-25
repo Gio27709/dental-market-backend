@@ -1,4 +1,5 @@
 @use "../variables.scss" as *;
+@use "sass:color";
 
 .global_hero {
   width: 100%;
@@ -21,7 +22,8 @@
   }
 
   .main_banner {
-    background: #f3f4f6;
+    background: $brand-midnight-blue;
+    color: $brand-bright-white;
     border-radius: 4px;
     padding: 60px 40px;
     display: flex;
@@ -31,9 +33,10 @@
     min-height: 400px;
 
     .badge {
-      background: #2563eb;
-      color: white;
+      background: $brand-lime-green;
+      color: $brand-midnight-blue;
       padding: 5px 15px;
+      font-weight: 700;
       border-radius: 20px;
       width: fit-content;
       font-size: 0.8rem;
@@ -52,14 +55,14 @@
       font-size: 1.2rem;
       margin-bottom: 30px;
       strong {
-        color: #dc2626;
+        color: $brand-lime-green;
         font-size: 1.5rem;
       }
     }
 
     .btn_shop {
-      background: #2563eb;
-      color: white;
+      background: $brand-lime-green;
+      color: $brand-midnight-blue;
       border: none;
       padding: 15px 35px;
       border-radius: 4px;
@@ -82,7 +85,7 @@
         background: #ccc;
         border-radius: 50%;
         &.active {
-          background: #2563eb;
+          background: $brand-lime-green;
           width: 25px;
           border-radius: 10px;
         }
@@ -105,15 +108,16 @@
     }
 
     .promo_card {
-      background: #f8f8f8;
+      background: color.adjust($brand-midnight-blue, $lightness: 5%);
+      color: $brand-bright-white;
       padding: 30px;
       flex: 1;
       border-radius: 4px;
 
       .discount {
-        color: #333;
+        color: rgba(255, 255, 255, 0.8);
         strong {
-          color: #dc2626;
+          color: $brand-bright-coral;
         }
       }
 
@@ -124,8 +128,9 @@
       }
 
       .btn_link {
-        background: #2563eb;
+        background: $brand-bright-coral;
         color: white;
+        font-weight: 600;
         border: none;
         padding: 8px 15px;
         border-radius: 4px;
@@ -157,8 +162,12 @@
       .icon {
         width: 40px;
         height: 40px;
-        border: 2px solid #2563eb;
+        border: 2px solid $brand-royal-purple;
+        color: $brand-royal-purple;
         border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       h3 {
         font-size: 0.9rem;

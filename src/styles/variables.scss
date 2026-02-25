@@ -42,3 +42,18 @@ $box-shadow-dark: 4px 4px 12px rgba(0, 0, 0, 0.4);
 $right-sidebar-size: 280px;
 $color-danger: #dc3545;
 $success-color: #28a745;
+
+/** ==========================================
+ *  PREMIUM BRAND PALETTE
+ *  ========================================== */
+$brand-royal-purple: #6a0dad; // Identidad de marca (Headers/Footers)
+$brand-midnight-blue: #001f3f; // Confianza y Calma (Hero Background/Promos)
+$brand-bright-coral: #ff6347; // Transaccional (Buy Buttons/Flash Promos)
+$brand-lime-green: #adff2f; // Call to Action (Principal CTA/Subscribe)
+$brand-bright-white: #ffffff; // Fondo de página
+
+/** Theme Colors for Deal Section & Others */
+$color-theme-blue: $brand-royal-purple; // Remapped to Royal Purple
+$color-theme-dark: $brand-midnight-blue; // Remapped to Midnight Blue
+$color-text-gray: #777777;
+$theme-gray-border: #e0e0e0;

@@ -1,0 +1,5 @@
+name,description,category_id,price,attribute_name,attribute_value,stock,sku
+Resina Z350 XT,Resina compuesta universal 3M,123e4567-e89b-12d3-a456-426614174000,35.50,Tono,A2,50,3M-Z350-A2
+Resina Z350 XT,Resina compuesta universal 3M,123e4567-e89b-12d3-a456-426614174000,35.50,Tono,A3,30,3M-Z350-A3
+Lidocaína 2% con Epinefrina,Anestésico local caja x 50 cárpules,123e4567-e89b-12d3-a456-426614174001,22.00,Presentación,Caja x50,100,LIDO-50
+Guantes de Nitrilo,Guantes libres de látex,123e4567-e89b-12d3-a456-426614174002,8.50,Talla,Medium,200,NITR-M

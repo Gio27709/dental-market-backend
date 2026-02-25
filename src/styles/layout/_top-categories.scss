@@ -1,0 +1,245 @@
+@use "../variables" as *;
+
+@use "sass:color";
+
+// Local variables for component theming
+$theme-primary: $brand-royal-purple;
+$theme-dark: #1f1f1f;
+$theme-gray-border: #e5e7eb;
+$theme-text-gray: #4b5563;
+
+.top-categories-section {
+  padding: 40px 0;
+  background-color: #fff;
+
+  .container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: nowrap;
+    gap: 24px;
+
+    @media (max-width: 992px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .title-area {
+      flex: 0 0 auto;
+      max-width: 400px;
+
+      h2 {
+        font-size: 20px;
+        font-weight: 700;
+        color: $theme-dark;
+        margin-bottom: 4px;
+      }
+
+      p {
+        color: $theme-text-gray;
+        font-size: 13px;
+        line-height: 1.4;
+        margin: 0;
+        // Display on all screens per user request
+        display: block;
+      }
+    }
+
+    .tabs-area {
+      display: flex;
+      gap: 12px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+
+      // Mobile: 4-Column Grid (Tunex Style)
+      @media (max-width: 992px) {
+        display: grid;
+        grid-template-columns: repeat(
+          4,
+          1fr
+        ); // Exact user request: 4 categories per row
+        gap: 12px;
+        width: 100%;
+        padding-bottom: 0;
+        overflow: visible; // No scrolling
+        margin: 0; // Reset full bleed margins
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      // Hide scrollbar
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        // Desktop Base Styles - STRICTLY DEFINED
+        width: 100px;
+        height: 75px;
+        background: #fff;
+        border: 1px solid $theme-gray-border;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 8px;
+        flex: 0 0 auto;
+
+        // Mobile Only Overrides - GRID ITEMS
+        @media (max-width: 992px) {
+          width: 100% !important; // Fill the grid cell (which is 1/4 of screen)
+          height: auto !important;
+          aspect-ratio: 1 / 1; // Keep square ratio
+          flex: 0 0 auto !important;
+          border-radius: 12px;
+        }
+
+        .icon {
+          font-size: 20px; // Desktop Base Size
+          margin-bottom: 4px;
+          transition: transform 0.3s ease;
+
+          @media (max-width: 992px) {
+            font-size: 36px; // Mobile Large Size (Tunex style)
+            margin-bottom: 8px;
+          }
+        }
+
+        .label {
+          font-size: 13px;
+          font-weight: 600;
+          color: $theme-dark;
+          text-align: center;
+          line-height: 1.2;
+        }
+
+        &:hover {
+          border-color: $theme-primary;
+          color: $theme-primary;
+          .icon {
+            transform: translateY(-2px);
+            color: $theme-primary;
+          }
+          .label {
+            color: $theme-primary;
+          }
+        }
+
+        &.active {
+          border-color: $theme-primary;
+          background-color: color.adjust($brand-royal-purple, $lightness: 45%);
+
+          .icon {
+            color: $theme-primary;
+          }
+          .label {
+            color: $theme-primary;
+          }
+        }
+      }
+    }
+  }
+
+  .slider-container {
+    position: relative;
+
+    // The arrow buttons
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid $theme-gray-border;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s;
+
+      &.next {
+        right: -20px;
+      }
+
+      &.prev {
+        left: -20px;
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+        color: $theme-dark;
+      }
+
+      &:hover {
+        background: $theme-primary;
+        border-color: $theme-primary;
+        svg {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .products-grid {
+    display: flex;
+    gap: 12px; // Reduced gap per user request
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 16px;
+
+    // Enable Snapping
+    scroll-snap-type: x mandatory;
+
+    // Hide scrollbar
+    scrollbar-width: none; // Firefox
+    &::-webkit-scrollbar {
+      display: none; // Chrome/Safari
+    }
+
+    .product-item {
+      scroll-snap-align: start; // Snap to start of item
+      // Show exactly 5 items with 12px gap
+      // Formula: (100% - (4 * 12px)) / 5
+      // 4 * 12 = 48px. 48 / 5 = 9.6px.
+      min-width: calc(20% - 9.6px);
+      flex: 0 0 calc(20% - 9.6px);
+
+      @media (max-width: 1200px) {
+        min-width: calc(25% - 18px); // 4 items
+        flex: 0 0 calc(25% - 18px);
+      }
+      @media (max-width: 992px) {
+        min-width: calc(33.333% - 16px); // 3 items
+        flex: 0 0 calc(33.333% - 16px);
+      }
+      @media (max-width: 768px) {
+        min-width: calc(50% - 12px); // 2 items
+        flex: 0 0 calc(50% - 12px);
+      }
+      @media (max-width: 480px) {
+        min-width: 100%; // 1 item
+        flex: 0 0 100%;
+      }
+    }
+  }
+}

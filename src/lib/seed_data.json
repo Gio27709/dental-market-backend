@@ -1,0 +1,83 @@
+{
+  "categories": [
+    {
+      "name": "Headphones",
+      "slug": "headphones",
+      "image_url": "https://placehold.co/100x100/png?text=Headphones"
+    },
+    {
+      "name": "Smartphones",
+      "slug": "smartphones",
+      "image_url": "https://placehold.co/100x100/png?text=Phones"
+    },
+    {
+      "name": "Cameras",
+      "slug": "cameras",
+      "image_url": "https://placehold.co/100x100/png?text=Cameras"
+    },
+    {
+      "name": "Laptops",
+      "slug": "laptops",
+      "image_url": "https://placehold.co/100x100/png?text=Laptops"
+    }
+  ],
+  "brands": [
+    { "name": "Sony", "slug": "sony" },
+    { "name": "Apple", "slug": "apple" },
+    { "name": "Samsung", "slug": "samsung" },
+    { "name": "DJI", "slug": "dji" }
+  ],
+  "exchange_rates": [
+    {
+      "rate_bcv": 36.5,
+      "currency_from": "USD",
+      "currency_to": "VES"
+    }
+  ],
+  "products": [
+    {
+      "title": "Sony WH-1000XM5 Noise Canceling",
+      "slug": "sony-wh-1000xm5",
+      "price_usd": 349.99,
+      "stock": 50,
+      "sku": "SNY-XM5-BLK",
+      "images": ["https://placehold.co/400x400/png?text=Sony+XM5"],
+      "description": "Premium noise canceling headphones.",
+      "category_slug": "headphones",
+      "brand_slug": "sony"
+    },
+    {
+      "title": "iPhone 15 Pro Max",
+      "slug": "iphone-15-pro-max",
+      "price_usd": 1199.0,
+      "stock": 25,
+      "sku": "APL-IP15PM",
+      "images": ["https://placehold.co/400x400/png?text=iPhone+15"],
+      "description": "Latest Apple smartphone with titanium body.",
+      "category_slug": "smartphones",
+      "brand_slug": "apple"
+    },
+    {
+      "title": "DJI Mini 4 Pro",
+      "slug": "dji-mini-4-pro",
+      "price_usd": 759.0,
+      "stock": 10,
+      "sku": "DJI-MN4P",
+      "images": ["https://placehold.co/400x400/png?text=DJI+Mini+4"],
+      "description": "Compact and powerful drone.",
+      "category_slug": "cameras",
+      "brand_slug": "dji"
+    },
+    {
+      "title": "Samsung Galaxy S24 Ultra",
+      "slug": "samsung-s24-ultra",
+      "price_usd": 1299.99,
+      "stock": 40,
+      "sku": "SMS-S24U",
+      "images": ["https://placehold.co/400x400/png?text=Galaxy+S24"],
+      "description": "Flagship Android smartphone with flat display.",
+      "category_slug": "smartphones",
+      "brand_slug": "samsung"
+    }
+  ]
+}

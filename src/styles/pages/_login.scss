@@ -1,0 +1,277 @@
+@use "../variables" as *;
+@use "sass:color";
+
+.login-page {
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  font-family: "Inter", sans-serif; /* Ensure a clean font */
+
+  .login-split-screen {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    /* Left Column: Image/Branding */
+    .login-brand-section {
+      flex: 1;
+      position: relative;
+      background-color: $color-theme-dark;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+
+      .brand-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.8;
+      }
+
+      .brand-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0.3) 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 4rem;
+        color: #fff;
+        z-index: 2;
+
+        h1 {
+          font-size: 3.5rem;
+          font-weight: 700;
+          margin-bottom: 1.5rem;
+          line-height: 1.1;
+        }
+
+        p {
+          font-size: 1.25rem;
+          opacity: 0.9;
+          max-width: 500px;
+          line-height: 1.6;
+        }
+      }
+
+      @media (max-width: 992px) {
+        display: none; /* Hide image on smaller screens */
+      }
+    }
+
+    /* Right Column: Form */
+    .login-form-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background-color: #fff;
+
+      .login-container {
+        width: 100%;
+        max-width: 420px;
+        padding: 2rem;
+
+        .login-header {
+          text-align: center;
+          margin-bottom: 2.5rem;
+
+          .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: $color-theme-dark;
+            margin-bottom: 0.5rem;
+          }
+
+          .login-subtitle {
+            color: $color-text-gray;
+            font-size: 1rem;
+          }
+        }
+
+        .error-message {
+          background-color: #fef2f2;
+          color: #ef4444;
+          padding: 12px;
+          border-radius: 6px;
+          margin-bottom: 1.5rem;
+          font-size: 0.9rem;
+          text-align: center;
+          border: 1px solid #fecaca;
+        }
+
+        .google-btn {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          padding: 14px;
+          background-color: #fff;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 500;
+          color: $color-theme-dark;
+          transition: all 0.2s ease;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+          img {
+            width: 20px;
+            height: 20px;
+          }
+
+          &:hover {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
+          }
+        }
+
+        .divider {
+          display: flex;
+          align-items: center;
+          text-align: center;
+          margin-bottom: 1.5rem;
+          color: #9ca3af;
+
+          &::before,
+          &::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #e5e7eb;
+          }
+
+          span {
+            padding: 0 10px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+        }
+
+        .login-form {
+          .form-group {
+            margin-bottom: 1.2rem;
+
+            label {
+              display: block;
+              margin-bottom: 8px;
+              font-weight: 500;
+              color: $color-theme-dark;
+              font-size: 0.9rem;
+            }
+
+            input {
+              width: 100%;
+              padding: 14px;
+              border: 1px solid #e5e7eb;
+              border-radius: 8px;
+              font-size: 1rem;
+              outline: none;
+              transition: all 0.2s;
+              background-color: #f9fafb;
+
+              &:focus {
+                border-color: $color-theme-blue;
+                background-color: #fff;
+                box-shadow: 0 0 0 3px rgba($color-theme-blue, 0.1);
+              }
+            }
+          }
+
+          .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+
+            .remember-me {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+
+              input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+                border-radius: 4px;
+                cursor: pointer;
+              }
+
+              label {
+                font-size: 0.9rem;
+                color: $color-text-gray;
+                cursor: pointer;
+              }
+            }
+
+            .forgot-password {
+              font-size: 0.9rem;
+              color: $color-theme-blue;
+              text-decoration: none;
+              font-weight: 500;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+
+          .login-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: $color-theme-blue;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba($color-theme-blue, 0.2);
+
+            &:hover {
+              background-color: color.scale($color-theme-blue, $lightness: -8%);
+              transform: translateY(-1px);
+              box-shadow: 0 6px 12px rgba($color-theme-blue, 0.25);
+            }
+
+            &:active {
+              transform: translateY(0);
+            }
+
+            &:disabled {
+              opacity: 0.7;
+              cursor: not-allowed;
+            }
+          }
+        }
+
+        .register-link {
+          text-align: center;
+          margin-top: 2rem;
+          font-size: 0.95rem;
+          color: $color-text-gray;
+
+          a {
+            color: $color-theme-blue;
+            font-weight: 600;
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}

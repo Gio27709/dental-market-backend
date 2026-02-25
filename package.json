@@ -1,5 +1,5 @@
 {
-  "name": "techPage",
+  "name": "tech-page",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,11 +8,18 @@
     "server": "cd server && npm run dev",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "db:setup": "node scripts/setup_db.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.95.3",
+    "i18next": "^25.8.7",
+    "i18next-browser-languagedetector": "^8.2.1",
+    "i18next-http-backend": "^3.0.2",
+    "lucide-react": "^0.575.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-i18next": "^16.5.4",
     "react-router-dom": "^7.13.0",
     "zustand": "^5.0.11"
   },
@@ -22,10 +29,12 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "concurrently": "^9.2.1",
+    "dotenv": "^17.3.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "pg": "^8.18.0",
     "sass-embedded": "^1.97.3",
     "vite": "^7.2.4"
   }

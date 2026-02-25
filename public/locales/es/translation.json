@@ -1,0 +1,60 @@
+{
+  "header": {
+    "search_placeholder": "Buscar artículos...",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "account": "Mi Cuenta",
+    "order_tracking": "Rastreo de Orden",
+    "english": "Inglés",
+    "spanish": "Español",
+    "language": "Idioma",
+    "usd": "USD",
+    "home": "INICIO",
+    "shop": "TIENDA",
+    "pages": "PÁGINAS",
+    "contact": "CONTACTO",
+    "all_categories": "TODAS LAS CATEGORÍAS"
+  },
+  "auth": {
+    "sign_in_title": "Iniciar Sesión",
+    "google_sign_in": "Iniciar con Google",
+    "email_label": "Correo Electrónico",
+    "password_label": "Contraseña",
+    "confirm_password_label": "Confirmar Contraseña",
+    "first_name_label": "Nombre",
+    "last_name_label": "Apellido",
+    "forgot_pass": "¿Olvidaste tu contraseña?",
+    "sign_in_btn": "Entrar",
+    "register_btn": "Registrarse",
+    "create_account_title": "Crear Cuenta",
+    "join_us_subtitle": "Únete para obtener las mejores ofertas",
+    "no_account": "¿No tienes cuenta?",
+    "have_account": "¿Ya tienes una cuenta?",
+    "create_one": "Crea una",
+    "pass_mismatch": "Las contraseñas no coinciden",
+    "pass_requirements": "Por favor cumple con los requisitos de la contraseña",
+    "reg_success": "¡Registro exitoso! Por favor revisa tu correo para confirmar tu cuenta antes de iniciar sesión."
+  },
+  "dashboard": {
+    "welcome": "Bienvenido",
+    "sidebar": {
+      "account_info": "Información de la Cuenta",
+      "my_orders": "Mis Pedidos",
+      "my_wishlist": "Mi Lista de Deseos",
+      "manage_addresses": "Direcciones",
+      "payment_methods": "Métodos de Pago",
+      "my_reviews": "Mis Reseñas",
+      "sign_out": "Cerrar Sesión"
+    },
+    "profile": {
+      "title": "Información de la Cuenta",
+      "description": "Gestiona tu información personal y detalles de contacto.",
+      "save_changes": "Guardar Cambios",
+      "saving": "Guardadando...",
+      "cancel": "Cancelar",
+      "success_update": "¡Perfil actualizado correctamente!",
+      "phone_label": "Número de Teléfono",
+      "email_no_change": "El correo no se puede cambiar"
+    }
+  }
+}

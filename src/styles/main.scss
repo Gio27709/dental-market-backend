@@ -4,6 +4,11 @@
 @use "layout/hero.scss";
 @use "layout/header.scss";
 @use "common/sidebar.scss";
+@use "common/product-card.scss";
+@use "layout/top-categories.scss";
+@use "layout/brands-ticker.scss";
+@use "layout/deal-of-day.scss";
+@use "components/cart";
 
 *,
 *::before,

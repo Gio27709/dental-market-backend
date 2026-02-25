@@ -1,0 +1,84 @@
+@use "../variables" as *;
+
+.brands-ticker-section {
+  padding: 60px 0;
+  background-color: #fff;
+  overflow: hidden;
+  user-select: none;
+  border-top: 1px solid #f0f0f0;
+
+  .ticker-container {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    // Gradient masks for fade effect on edges
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    &::before {
+      left: 0;
+      background: linear-gradient(to right, #fff, transparent);
+    }
+
+    &::after {
+      right: 0;
+      background: linear-gradient(to left, #fff, transparent);
+    }
+  }
+
+  .ticker-track {
+    display: flex;
+    align-items: center;
+    gap: 80px; // Spacing between logos
+    width: max-content;
+    will-change: transform;
+    padding: 20px 0;
+  }
+
+  .brand-item {
+    flex-shrink: 0;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+    opacity: 1;
+    filter: grayscale(100%) brightness(0); // Force black
+
+    &:hover {
+      transform: scale(1.05);
+      // Keep black on hover or change if desired, keeping simple for now
+    }
+
+    img {
+      height: 40px; // Uniform height
+      width: auto;
+      object-fit: contain;
+      display: block;
+      pointer-events: none; // Prevent image drag
+    }
+
+    // Fallback text style if images fail or for placeholders
+    span {
+      font-size: 24px;
+      font-weight: 800;
+      color: #000;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+    }
+  }
+}

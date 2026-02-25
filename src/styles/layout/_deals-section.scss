@@ -1,0 +1,230 @@
+@use "sass:color";
+@use "../variables" as *;
+
+// Local variables for this section
+$theme-gray-border: #e5e7eb;
+$theme-dark: #1f2937;
+$theme-blue: #2563eb;
+$theme-text-gray: #6b7280;
+
+.deals-section {
+  padding: 40px 0;
+  background-color: #f8f9fa; // Slight separation from white background
+
+  .container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .deals-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr; // Beast deal is slightly wider
+    gap: 24px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: 1fr 1fr; // 2x2 grid
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr; // Stack everything
+    }
+  }
+
+  // Column Title (Common)
+  .column-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $theme-gray-border;
+    color: $theme-dark;
+  }
+
+  // Beast Deal Card
+  .beast-deal-card {
+    background: #fff;
+    border: 1px solid $theme-blue; // Highlight border
+    border-radius: 12px;
+    padding: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+
+    .deal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .deal-badge {
+        background: #ff4757;
+        color: #fff;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .deal-timer {
+        font-size: 13px;
+        color: #ff4757;
+        font-weight: 600;
+      }
+    }
+
+    .deal-image {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+
+      img {
+        max-width: 100%;
+        max-height: 250px;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover img {
+        transform: scale(1.05);
+      }
+    }
+
+    .deal-content {
+      .product-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: $theme-dark;
+      }
+
+      .product-rating {
+        color: #ffc107;
+        font-size: 14px;
+        margin-bottom: 8px;
+        .count {
+          color: $theme-text-gray;
+        }
+      }
+
+      .product-price {
+        font-size: 20px;
+        font-weight: 700;
+        color: $theme-blue;
+        margin-bottom: 12px;
+
+        .old {
+          font-size: 14px;
+          color: $theme-text-gray;
+          text-decoration: line-through;
+          margin-left: 8px;
+          font-weight: 400;
+        }
+      }
+
+      .product-desc {
+        font-size: 13px;
+        color: $theme-text-gray;
+        line-height: 1.5;
+        margin-bottom: 16px;
+      }
+
+      .add-to-cart-btn {
+        width: 100%;
+        padding: 12px;
+        background: $theme-blue;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover {
+          background: color.adjust($theme-blue, $lightness: -10%);
+        }
+      }
+    }
+  }
+
+  // Product List Items
+  .list-items {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .product-list-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #f0f2f5;
+    }
+
+    .item-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid $theme-gray-border;
+
+      img {
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain;
+      }
+    }
+
+    .item-details {
+      flex: 1;
+
+      .item-title {
+        margin: 0 0 4px;
+        font-size: 14px;
+        line-height: 1.3;
+
+        a {
+          color: $theme-dark;
+          text-decoration: none;
+          &:hover {
+            color: $theme-blue;
+          }
+        }
+      }
+
+      .item-rating {
+        color: #ffc107;
+        font-size: 12px;
+        margin-bottom: 4px;
+      }
+
+      .item-price {
+        font-size: 15px;
+        font-weight: 700;
+        color: $theme-blue;
+
+        .old-price {
+          font-size: 12px;
+          color: $theme-text-gray;
+          text-decoration: line-through;
+          margin-left: 6px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}

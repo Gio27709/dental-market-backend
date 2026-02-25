@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: dental-market-api
+    env: node
+    region: oregon # Customize depending on availability
+    plan: free
+    buildCommand: npm install && pip3 install -r scripts/requirements.txt && mkdir -p uploads/temp
+    startCommand: node src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: PYTHON_COMMAND
+        value: python3
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false
+      - key: MAX_BULK_IMPORT
+        value: "500"
+      - key: MAX_LICENSE_SIZE_MB
+        value: "5"
+      - key: TZ
+        value: "America/Caracas"
