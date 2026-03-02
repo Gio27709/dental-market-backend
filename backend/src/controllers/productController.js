@@ -31,6 +31,43 @@ export const getProducts = async (req, res, next) => {
 };
 
 /**
+ * @desc    Get single product by ID including its variations
+ * @route   GET /api/products/:id
+ * @access  Public
+ */
+export const getProductById = async (req, res, next) => {
+  try {
+    const productId = req.params.id;
+    const { data, error } = await supabaseAdmin
+      .from("products")
+      .select(
+        `
+                *,
+                product_variations (*),
+                store_profiles (business_name, rating_avg)
+            `,
+      )
+      .eq("id", productId)
+      .eq("is_active", true)
+      .eq("moderation_status", "approved")
+      .single();
+
+    if (error) {
+      if (error.code === "PGRST116") {
+        return res
+          .status(404)
+          .json({ success: false, error: "Product not found" });
+      }
+      throw error;
+    }
+
+    res.status(200).json({ success: true, data });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
  * @desc    Create a product with mandatory initial variations
  * @route   POST /api/products
  * @access  Private (Store, Admin, Owner)

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getProducts,
+  getProductById,
   createProduct,
   deleteProduct,
   bulkImportProducts,
@@ -19,6 +20,7 @@ const router = express.Router();
 
 // Public
 router.get("/", getProducts);
+router.get("/:id", getProductById);
 
 // Bulk Import Template
 router.get(
