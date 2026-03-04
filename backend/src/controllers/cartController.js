@@ -52,7 +52,8 @@ export const getCart = async (req, res, next) => {
           id,
           name,
           price,
-          images
+          images,
+          store_id
         ),
         product_variations (
           id,
@@ -79,6 +80,7 @@ export const getCart = async (req, res, next) => {
         id: item.id, // Primary key of cart_item
         frontend_id: `${item.product_id}-${item.variation_id || "default"}`, // For frontend compat
         product_id: item.product_id,
+        store_id: item.products.store_id,
         variation_id: item.variation_id,
         name: item.products.name,
         price_usd: finalPrice,

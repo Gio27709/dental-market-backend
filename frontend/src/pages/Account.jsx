@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { getMyOrders } from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabaseClient";
 
 export default function Account() {
   const { user, logout } = useAuth();
@@ -13,18 +14,43 @@ export default function Account() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
     const fetchOrders = async () => {
+      // Don't fetch if user is already logged out or logging out
+      if (!user) return;
+
       try {
-        const response = await getMyOrders();
-        setOrders(response.data.data || response.data);
+        // Double check session hasn't been destroyed in the split second since render
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        if (!session) return; // Silent abort if no token
+
+        const response = await getMyOrders({ signal: controller.signal });
+        if (isMounted) {
+          setOrders(response.data.data || response.data);
+        }
       } catch (err) {
-        setError(err.response?.data?.error || "Error al cargar pedidos");
+        if (err.name === "CanceledError" || err.message === "canceled") return;
+        if (isMounted) {
+          setError(err.response?.data?.error || "Error al cargar pedidos");
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
+
     fetchOrders();
-  }, []);
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [user]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

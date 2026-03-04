@@ -2,10 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ProductProvider } from "./context/ProductContext";
 import { CartProvider } from "./context/CartContext";
+import { OrderProvider } from "./context/OrderContext";
 import { Toaster } from "react-hot-toast";
 
 import Header from "./components/Header";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -13,6 +14,9 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Account from "./pages/Account";
 import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
+import PaymentApprovals from "./pages/Admin/PaymentApprovals";
 
 export default function App() {
   return (
@@ -20,45 +24,74 @@ export default function App() {
       <AuthProvider>
         <ProductProvider>
           <CartProvider>
-            <div className="min-h-screen flex flex-col font-sans">
-              <Header />
-              <main className="flex-grow bg-gray-50">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/product/:id" element={<ProductDetail />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route
-                    path="/account"
-                    element={
-                      <ProtectedRoute>
-                        <Account />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </main>
+            <OrderProvider>
+              <div className="min-h-screen flex flex-col font-sans">
+                <Header />
+                <main className="flex-grow bg-gray-50">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/product/:id" element={<ProductDetail />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route
+                      path="/account"
+                      element={
+                        <ProtectedRoute>
+                          <Account />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/checkout"
+                      element={
+                        <ProtectedRoute redirectTo="/login">
+                          <Checkout />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/order-success/:id"
+                      element={
+                        <ProtectedRoute redirectTo="/login">
+                          <OrderSuccess />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin/payment-approvals"
+                      element={
+                        <ProtectedRoute
+                          redirectTo="/login"
+                          requiredRole={["admin", "owner"]}
+                        >
+                          <PaymentApprovals />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Routes>
+                </main>
 
-              <footer className="bg-white border-t border-gray-200 mt-auto">
-                <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                  <p className="text-center text-gray-500 text-sm">
-                    &copy; {new Date().getFullYear()} DentalMarket MVP. Todos
-                    los derechos reservados.
-                  </p>
-                </div>
-              </footer>
-              <Toaster
-                position="bottom-center"
-                toastOptions={{
-                  duration: 3000,
-                  style: {
-                    background: "#333",
-                    color: "#fff",
-                  },
-                }}
-              />
-            </div>
+                <footer className="bg-white border-t border-gray-200 mt-auto">
+                  <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <p className="text-center text-gray-500 text-sm">
+                      &copy; {new Date().getFullYear()} DentalMarket MVP. Todos
+                      los derechos reservados.
+                    </p>
+                  </div>
+                </footer>
+                <Toaster
+                  position="bottom-center"
+                  toastOptions={{
+                    duration: 3000,
+                    style: {
+                      background: "#333",
+                      color: "#fff",
+                    },
+                  }}
+                />
+              </div>
+            </OrderProvider>
           </CartProvider>
         </ProductProvider>
       </AuthProvider>

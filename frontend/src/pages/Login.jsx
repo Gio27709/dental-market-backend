@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
@@ -9,13 +9,18 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { login, loginWithGoogle, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Redirect to home if user is logged in
+  // Parse callback url if it exists, otherwise default to home
+  const queryParams = new URLSearchParams(location.search);
+  const redirectPath = queryParams.get("redirect") || "/";
+
+  // Redirect to target path if user is already logged in
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate(redirectPath);
     }
-  }, [user, navigate]);
+  }, [user, navigate, redirectPath]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +28,7 @@ export default function Login() {
       setLoading(true);
       setError(null);
       await login({ email, password });
-      navigate("/");
+      navigate(redirectPath);
     } catch (err) {
       setError(err.message || "Error al iniciar sesión");
     } finally {

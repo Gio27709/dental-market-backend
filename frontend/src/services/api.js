@@ -43,7 +43,20 @@ api.interceptors.response.use(
 export const getProducts = () => api.get("/products");
 // Native login/register runs directly hitting Supabase. We only use api for business logic:
 export const createOrder = (orderData) => api.post("/orders", orderData);
-export const getMyOrders = () => api.get("/orders");
+export const getMyOrders = (config = {}) => api.get("/orders", config);
+export const getOrderByIdAPI = (id) => api.get(`/orders/${id}`);
+export const uploadPaymentProofAPI = (id, formData) =>
+  api.post(`/orders/${id}/payment-proof`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+// Admin Escrow API
+export const approvePaymentAPI = (id) =>
+  api.put(`/admin/orders/${id}/approve-payment`);
+export const rejectPaymentAPI = (id, reason) =>
+  api.put(`/admin/orders/${id}/reject-payment`, { reason });
 
 // Cart Database Sync API
 export const fetchCart = () => api.get("/cart");

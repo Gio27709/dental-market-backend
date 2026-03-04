@@ -13,7 +13,6 @@ import {
   updateCartItemAPI,
   removeCartItemAPI,
   clearCartAPI,
-  mergeCartAPI,
 } from "../services/api";
 
 const CartContext = createContext();
@@ -43,16 +42,19 @@ export const CartProvider = ({ children }) => {
           const savedLocal = localStorage.getItem(CART_STORAGE_KEY);
           if (savedLocal) {
             const localItems = JSON.parse(savedLocal);
-            if (localItems.length > 0) {
-              await mergeCartAPI(localItems);
-            }
-            localStorage.removeItem(CART_STORAGE_KEY); // Clear it forever after sending
+            // Even if authenticated, we might have freshly logged in or reloaded the tab
+            // If they are local items without db_id, we could attempt a merge,
+            // but for safety, we just render them instantly while we fetch the remote truth.
+            setItems(localItems);
+
+            // Note: If you want to merge fresh anonymous items after login, you'd filter out the ones with db_id here
+            // before sending to mergeCartAPI. For now, we trust the DB fetch.
           }
 
-          // Fetch remote cart
+          // Fetch remote cart to overwrite/sync
           await loadRemoteCart();
         } else {
-          // Anonyous User Flow
+          // Anonymous User Flow
           const savedLocal = localStorage.getItem(CART_STORAGE_KEY);
           if (savedLocal) {
             setItems(JSON.parse(savedLocal));
@@ -93,10 +95,8 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     if (loading) return;
 
-    // If anonymous, persist to localStorage on any items change
-    if (!user) {
-      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
-    }
+    // Persist to localStorage regardless of auth state to ensure fast reload across tabs
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
 
     const calculateTotals = () => {
       const calculatedUsd = items.reduce(
@@ -115,7 +115,7 @@ export const CartProvider = ({ children }) => {
     };
 
     calculateTotals();
-  }, [items, bcvRate, loading, user]);
+  }, [items, bcvRate, loading]);
 
   // 4. Actions
   const addToCart = async (product, variation, quantity = 1) => {
@@ -128,6 +128,7 @@ export const CartProvider = ({ children }) => {
     const newItem = {
       id: frontendId,
       product_id: product.id,
+      store_id: product.store_id,
       variation_id: variation?.id || null,
       name: product.name,
       price_usd: product.price + (variation?.price_modifier || 0),

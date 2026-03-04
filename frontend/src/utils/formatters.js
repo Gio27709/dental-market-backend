@@ -15,3 +15,18 @@ export const formatCurrencyUSD = (amount) => {
 export const formatCartItemSubtotal = (price, quantity) => {
   return price * quantity;
 };
+
+export const formatOrderNumber = (id) => {
+  if (!id) return "";
+  // Display only the first 6 characters to make them manageable (assuming UUID source)
+  return `ORD-${id.substring(0, 6).toUpperCase()}`;
+};
+
+export const formatPhoneNumber = (phone) => {
+  if (!phone) return phone;
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length >= 11) {
+    return `${digits.substring(0, 4)}-${digits.substring(4, 11)}`;
+  }
+  return phone;
+};
