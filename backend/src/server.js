@@ -11,8 +11,19 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: function (origin, callback) {
+      if (
+        !origin ||
+        origin === "http://localhost:5173" ||
+        origin.endsWith(".vercel.app") ||
+        origin === process.env.CORS_ORIGIN
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
@@ -26,6 +37,7 @@ import wishlistRoutes from "./routes/wishlistRoutes.js";
 import professionalRoutes from "./routes/professionalRoutes.js";
 import healthRoutes from "./routes/healthRoutes.js";
 import diagRoutes from "./routes/diagRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 // Register Application Base Routes
 app.use("/", healthRoutes);
@@ -38,6 +50,7 @@ app.use("/api/store/wallet", walletRoutes);
 app.use("/api/admin/settings", settingsRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/professional", professionalRoutes);
+app.use("/api/cart", cartRoutes);
 
 // Global Error Handler
 app.use(errorHandler);
