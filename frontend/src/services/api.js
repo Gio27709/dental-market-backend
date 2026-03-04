@@ -16,6 +16,15 @@ api.interceptors.request.use(
     if (session?.access_token) {
       config.headers.Authorization = `Bearer ${session.access_token}`;
     }
+
+    // Debugging interceptor
+    if (config.url?.includes("/orders") && config.method === "post") {
+      console.log(
+        "🔥 OUTGOING PAYLOAD TO /orders:",
+        JSON.stringify(config.data, null, 2),
+      );
+    }
+
     return config;
   },
   (error) => Promise.reject(error),
@@ -36,6 +45,11 @@ api.interceptors.response.use(
     } else if (error.request) {
       console.error("Network error. No response received.");
     }
+    // Pass the actual backend error message through to the caller if available
+    if (error.response?.data?.error) {
+      error.message = error.response.data.error;
+    }
+
     return Promise.reject(error);
   },
 );

@@ -4,7 +4,7 @@ export const createOrderSchema = Joi.object({
   items: Joi.array()
     .items(
       Joi.object({
-        variation_id: Joi.string().uuid().required(),
+        variation_id: Joi.string().uuid().allow(null).required(),
         store_id: Joi.string().uuid().required(),
         quantity: Joi.number().integer().min(1).required(),
         unit_price: Joi.number().min(0.01).required(),
