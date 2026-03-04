@@ -7,6 +7,10 @@ const validate = (schema) => {
     });
 
     if (error) {
+      console.error(
+        "🔥 JOI VALIDATION FAILED:",
+        JSON.stringify(error.details, null, 2),
+      );
       // Re-format Joi errors to be concise and pass it down to ErrorHandler
       error.statusCode = 400;
       return next(error);
