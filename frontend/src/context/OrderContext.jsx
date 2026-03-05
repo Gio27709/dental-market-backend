@@ -43,7 +43,7 @@ export const OrderProvider = ({ children }) => {
     setError(null);
     try {
       const formData = new FormData();
-      formData.append("proof", file); // Must match multer/busboy field name expectations on backend
+      formData.append("file", file); // Must match multer/busboy field name expectations on backend
       const response = await uploadPaymentProofAPI(orderId, formData);
       const updatedOrder = response.data.order || response.data;
       setCurrentOrder(updatedOrder);
@@ -76,7 +76,7 @@ export const OrderProvider = ({ children }) => {
     }
   }, []);
 
-  const fetchOrderById = async (id) => {
+  const fetchOrderById = useCallback(async (id) => {
     setLoading(true);
     setError(null);
     try {
@@ -91,7 +91,7 @@ export const OrderProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const approvePayment = async (orderId) => {
     setLoading(true);

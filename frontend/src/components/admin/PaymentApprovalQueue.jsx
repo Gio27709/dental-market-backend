@@ -87,7 +87,12 @@ export default function PaymentApprovalQueue({
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-900 font-medium">
-                        {order.user?.email || "Usuario desconocido"}
+                        {order.users?.full_name ||
+                          order.users?.email ||
+                          "Usuario desconocido"}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {order.users?.email || ""}
                       </div>
                       <div className="text-xs text-gray-500 uppercase flex items-center gap-1 mt-1">
                         <span className="w-2 h-2 rounded-full bg-blue-500"></span>

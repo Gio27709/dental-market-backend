@@ -120,7 +120,7 @@ export default function Account() {
                       ${order.total_usd.toFixed(2)}
                     </p>
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize">
-                      {order.order_status}
+                      {order.payment_status}
                     </span>
                   </div>
                 </div>
@@ -132,11 +132,22 @@ export default function Account() {
                         {item.quantity}x {item.products?.name || "Producto"}
                       </span>
                       <span className="font-medium text-gray-900">
-                        ${(item.price_at_purchase * item.quantity).toFixed(2)}
+                        ${(item.unit_price * item.quantity).toFixed(2)}
                       </span>
                     </div>
                   ))}
                 </div>
+
+                {order.payment_status === "rejected" && order.notes && (
+                  <div className="mt-4 bg-red-50 border border-red-200 text-red-700 text-sm p-3 rounded-md">
+                    <p className="font-semibold mb-1">Motivo de Rechazo:</p>
+                    <p>{order.notes.replace(/^Pago rechazado:\s*/, "")}</p>
+                    <p className="mt-2 text-xs opacity-90">
+                      Por favor, comunícate con soporte para resolver este
+                      inconveniente y poder procesar tu pedido.
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </div>

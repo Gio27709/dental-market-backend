@@ -38,6 +38,7 @@ import professionalRoutes from "./routes/professionalRoutes.js";
 import healthRoutes from "./routes/healthRoutes.js";
 import diagRoutes from "./routes/diagRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import adminOrderRoutes from "./routes/adminOrderRoutes.js";
 
 // Register Application Base Routes
 app.use("/", healthRoutes);
@@ -48,6 +49,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/store/wallet", walletRoutes);
 app.use("/api/admin/settings", settingsRoutes);
+app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/professional", professionalRoutes);
 app.use("/api/cart", cartRoutes);

@@ -18,7 +18,9 @@ export default function CheckoutForm({
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch (e) {
+        console.error("Error parsing checkout form data:", e);
+      }
     }
     return {
       address: "",

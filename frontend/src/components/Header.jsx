@@ -40,9 +40,25 @@ export default function Header() {
 
             {user ? (
               <>
+                {user.role === "admin" || user.role === "owner" ? (
+                  <>
+                    <Link
+                      to="/admin/payment-approvals"
+                      className="text-gray-600 hover:text-primary-600 font-medium"
+                    >
+                      Aprobar Pagos
+                    </Link>
+                    <Link
+                      to="/admin/orders"
+                      className="text-gray-600 hover:text-primary-600 font-medium mr-4"
+                    >
+                      Todos los Pedidos
+                    </Link>
+                  </>
+                ) : null}
                 <Link
                   to="/account"
-                  className="text-gray-600 hover:text-primary-600"
+                  className="text-gray-600 hover:text-primary-600 font-medium"
                 >
                   Mi Cuenta
                 </Link>

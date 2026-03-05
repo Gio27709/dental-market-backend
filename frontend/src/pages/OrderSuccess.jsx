@@ -98,7 +98,7 @@ export default function OrderSuccess() {
                   {item.products?.name}
                 </span>
                 <span className="font-medium text-gray-900">
-                  {formatCurrencyUSD(item.price_at_purchase * item.quantity)}
+                  {formatCurrencyUSD(item.unit_price * item.quantity)}
                 </span>
               </div>
             ))}

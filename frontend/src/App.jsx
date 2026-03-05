@@ -17,6 +17,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import PaymentApprovals from "./pages/Admin/PaymentApprovals";
+import AllOrders from "./pages/Admin/AllOrders";
 
 export default function App() {
   return (
@@ -66,6 +67,17 @@ export default function App() {
                           requiredRole={["admin", "owner"]}
                         >
                           <PaymentApprovals />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/admin/orders"
+                      element={
+                        <ProtectedRoute
+                          redirectTo="/login"
+                          requiredRole={["admin", "owner"]}
+                        >
+                          <AllOrders />
                         </ProtectedRoute>
                       }
                     />

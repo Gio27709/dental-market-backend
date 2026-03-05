@@ -17,8 +17,8 @@ export default function PaymentApprovals() {
 
   useEffect(() => {
     // Only fetch orders that are awaiting payment validation
-    // Optionally filters could be driven by the backend query
-    fetchOrders({ payment_status: "pending_approval" });
+    // Request global admin view to see everyone's orders
+    fetchOrders({ payment_status: "under_review", admin_view: "true" });
   }, [fetchOrders]);
 
   const handleViewProof = (url) => {
@@ -42,7 +42,7 @@ export default function PaymentApprovals() {
       toast.success(
         `Pago de la orden ${orderId.split("-")[0].toUpperCase()} aprobado con éxito.`,
       );
-      fetchOrders({ payment_status: "pending_approval" }); // Refresh queue
+      fetchOrders({ payment_status: "under_review" }); // Refresh queue
     } else {
       toast.error(res.error || "No se pudo aprobar la orden.");
     }
@@ -55,17 +55,15 @@ export default function PaymentApprovals() {
 
   const confirmReject = async () => {
     if (!rejectionReason.trim()) {
-      toast.error(
-        "Debes suministrar un motivo para rechazar el pago (Ej. Transferencia no refleja).",
-      );
+      toast.error("Debes suministrar un motivo válido para rechazar el pago.");
       return;
     }
 
     const res = await rejectPayment(rejectingOrderId, rejectionReason);
     if (res.success) {
-      toast.success(`Orden rechazada: ${rejectionReason}`);
+      toast.success(`Orden rechazada`);
       setRejectingOrderId(null);
-      fetchOrders({ payment_status: "pending_approval" }); // Refresh queue
+      fetchOrders({ payment_status: "under_review" }); // Refresh queue
     } else {
       toast.error(res.error || "Error al rechazar pago");
     }
@@ -78,7 +76,7 @@ export default function PaymentApprovals() {
 
   // Filter orders manually on frontend just in case backend ignores param temporarily
   const pendingOrders = orders.filter(
-    (o) => o.payment_status === "pending_approval",
+    (o) => o.payment_status === "under_review",
   );
 
   return (
@@ -108,7 +106,12 @@ export default function PaymentApprovals() {
         </div>
         <div className="mt-4 flex md:mt-0 md:ml-4">
           <button
-            onClick={() => fetchOrders({ payment_status: "pending_approval" })}
+            onClick={() =>
+              fetchOrders({
+                payment_status: "under_review",
+                admin_view: "true",
+              })
+            }
             disabled={loading}
             className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
           >
@@ -138,83 +141,54 @@ export default function PaymentApprovals() {
         />
       )}
 
-      {/* Rejection Modal */}
+      {/* Rejection Modal (Tailwind v4 Safe) */}
       {rejectingOrderId && (
-        <div
-          className="fixed inset-0 z-50 overflow-y-auto"
-          aria-labelledby="modal-title"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div
-              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-              aria-hidden="true"
-              onClick={cancelReject}
-            ></div>
-            <span
-              className="hidden sm:inline-block sm:align-middle sm:h-screen"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <svg
-                      className="h-6 w-6 text-red-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                      />
-                    </svg>
-                  </div>
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                    <h3
-                      className="text-lg leading-6 font-medium text-gray-900"
-                      id="modal-title"
-                    >
-                      Rechazar Pago de Orden
-                    </h3>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500 mb-2">
-                        Por favor, especifica el motivo por el cual se rechaza
-                        el pago recibido. Esto se enviará al cliente.
-                      </p>
-                      <textarea
-                        rows="3"
-                        className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm"
-                        placeholder="Ej. La referencia enviada no concuerda con nuestro estado de cuenta."
-                        value={rejectionReason}
-                        onChange={(e) => setRejectionReason(e.target.value)}
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button
-                  type="button"
-                  onClick={confirmReject}
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-lg p-6 overflow-hidden transform transition-all">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-red-100">
+                <svg
+                  className="h-6 w-6 text-red-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  Confirmar Rechazo
-                </button>
-                <button
-                  type="button"
-                  onClick={cancelReject}
-                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Cancelar
-                </button>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
               </div>
+              <h3 className="text-xl font-bold text-gray-900">
+                Rechazar Pago de Orden
+              </h3>
+            </div>
+            <p className="text-sm text-gray-500 mb-4">
+              Por favor, especifica el motivo por el cual se rechaza el pago
+              recibido. Esto se enviará al cliente.
+            </p>
+            <textarea
+              rows="3"
+              className="w-full border border-gray-300 rounded-md p-3 shadow-sm focus:ring-red-500 focus:border-red-500"
+              placeholder="Ej. La referencia enviada no concuerda con nuestro estado de cuenta."
+              value={rejectionReason}
+              onChange={(e) => setRejectionReason(e.target.value)}
+            ></textarea>
+            <div className="mt-5 flex justify-end gap-3">
+              <button
+                onClick={cancelReject}
+                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md font-medium hover:bg-gray-200 transition"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={confirmReject}
+                className="px-4 py-2 bg-red-600 text-white rounded-md font-medium hover:bg-red-700 transition shadow-sm"
+              >
+                Confirmar Rechazo
+              </button>
             </div>
           </div>
         </div>

@@ -34,6 +34,7 @@ export default function Checkout() {
       items: items.map((item) => ({
         product_id: item.product_id,
         variation_id: item.variation_id,
+        store_id: item.store_id,
         quantity: item.quantity,
         unit_price: item.price_usd,
       })),
