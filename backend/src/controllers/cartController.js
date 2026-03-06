@@ -309,14 +309,12 @@ export const mergeCart = async (req, res, next) => {
       const { data: existingItem } = await query.maybeSingle();
 
       if (existingItem) {
-        // Safe Math.max merge! Avoids multiplying bugs
-        const mergedQuantity = Math.max(existingItem.quantity, quantity);
-        if (mergedQuantity !== existingItem.quantity) {
-          await supabaseAdmin
-            .from("cart_items")
-            .update({ quantity: mergedQuantity })
-            .eq("id", existingItem.id);
-        }
+        // Sum both quantities so guest + account carts accumulate
+        const mergedQuantity = existingItem.quantity + quantity;
+        await supabaseAdmin
+          .from("cart_items")
+          .update({ quantity: mergedQuantity })
+          .eq("id", existingItem.id);
       } else {
         // Insert new
         await supabaseAdmin.from("cart_items").insert([
